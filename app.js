@@ -23,8 +23,10 @@ app.post('/upload', function(req, res){
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
+  var file_name = "unnamed";
   form.on('file', function(field, file) {
     fs.rename(file.path, path.join(form.uploadDir, file.name));
+    file_name = file.name;
   });
 
   // log any errors that occur
@@ -34,7 +36,8 @@ app.post('/upload', function(req, res){
 
   // once all the files have been uploaded, send a response to the client
   form.on('end', function() {
-    res.end('success');
+    res.header("Content-Type",'application/json');
+    res.send(JSON.stringify({'name': file_name}));
   });
 
   // parse the incoming request containing the form data

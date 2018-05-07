@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('.results-panel').hide();
+});
+
 $('.upload-btn').on('click', function (){
     $('#upload-input').click();
     $('.progress-bar').text('0%');
@@ -28,7 +33,9 @@ $('#upload-input').on('change', function(){
       processData: false,
       contentType: false,
       success: function(data){
-          console.log('upload successful!\n' + data);
+          $('.results-data').append(data['name']);
+          $('.upload-panel').hide();
+          $('.results-panel').show();
       },
       xhr: function() {
         // create an XMLHttpRequest
